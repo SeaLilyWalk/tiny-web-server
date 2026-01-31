@@ -77,12 +77,17 @@ void Server::Run() {
                 // 因为在建立链接之后浏览器才会发送报文, 所以先不用调用HTTPeHandler
             } else {
                 curr_connection = connections_[curr_fd];
-                if (curr_connection->get_state() == HTTP) 
+                if (curr_connection->get_state() == HTTP) {
                     if (!curr_connection->HTTPHandler()) {
                         epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
                         delete curr_connection;
                         close(curr_fd);
+                        std::cout << "Close client: " << curr_fd << std::endl;
+                    } else {
+                        if (curr_connection->get_state() == WEBSOCKET)
+                            std::cout << "Update to websocket" << std::endl;
                     }
+                }
                 // else
                 //    curr_connection->WebsocketHandler();
             }

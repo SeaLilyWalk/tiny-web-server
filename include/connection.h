@@ -27,8 +27,7 @@ private:
 
     bool SendWeb(char *http_data);
     bool UpdateToWebsocket(char *http_data);
-
-    void wskey_to_wsaccept(char *ws_key);
+    bool SendData(char *data, int len);
 
 public:
     Connection(int fd);

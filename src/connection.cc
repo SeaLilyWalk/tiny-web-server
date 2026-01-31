@@ -23,8 +23,10 @@ bool Connection::HTTPHandler() {
         part_len = read(fd_, buf_+buf_len_, BUF_SIZE-buf_len_);
         if (part_len == 0)
             break;
-        if (part_len < 0)
+        if (part_len < 0) {
+            std::cout << "read error" << std::endl;
             return false;
+        }
         http_end = std::strstr(buf_+buf_len_, "\r\n\r\n");
         if (http_end != nullptr) {
             http_len = (int)(http_end-buf_) + 4; 
@@ -35,16 +37,26 @@ bool Connection::HTTPHandler() {
             bool request_successful;
             if (std::strstr(http_data, "Sec-WebSocket-Key") == nullptr)
                 request_successful = SendWeb(http_data);
-            else 
+            else {
                 request_successful = UpdateToWebsocket(http_data);
+                if (request_successful) {
+                    delete [] http_data;
+                    std::strncpy(buf_, buf_+http_len, BUF_SIZE-http_len);
+                    return true;
+                }
+            }
             delete [] http_data;
             std::strncpy(buf_, buf_+http_len, BUF_SIZE-http_len);
-            if (!request_successful)
+            if (!request_successful) {
+                std::cout << "request error" << std::endl;
                 return false;
+            }
         } else {
             buf_len_ += part_len;
-            if (buf_len_ >= BUF_SIZE)                           // 检查收到的是否为HTTP报文
+            if (buf_len_ >= BUF_SIZE) {
+                std::cout << "buf overflow" << std::endl;
                 return false;
+            }
         }
     }
     return true;
@@ -127,9 +139,23 @@ bool Connection::UpdateToWebsocket(char *http_data) {
     );
 
     snprintf(head101+97, 42, "%s%s", accept_key, "\r\n\r\n");
-    write(fd_, head101, 126);
+    // write(fd_, head101, 126);
+    SendData(head101, std::strlen(head101));
 
     delete [] accept_key;
     state_ = WEBSOCKET;
+    return true;
+}
+
+
+bool Connection::SendData(char *data, int len) {
+    int n, send_pos = 0;
+    while (send_pos < len) {
+        n = write(fd_, data+send_pos, len-send_pos);
+        if (n > 0)
+            send_pos += n;
+        else if (n < 0)
+            return false;
+    }
     return true;
 }
