@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+    <style>
+        body { font-family: monospace; }
+        #log { border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 8px; }
+        input { width: 70%; }
+    </style>
+</head>
+<body>
+
+<h2>WebSocket Test Page</h2>
+
+<button onclick="connect()">Connect</button>
+<button onclick="disconnect()">Disconnect</button>
+<br><br>
+
+<input id="msg" placeholder="message to send">
+<button onclick="send()">Send</button>
+
+<pre id="log"></pre>
+
+<script>
+let ws = null;
+
+function log(msg) {
+    const el = document.getElementById("log");
+    el.textContent += msg + "\n";
+    el.scrollTop = el.scrollHeight;
+}
+
+function connect() {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        log("already connected");
+        return;
+    }
+
+    ws = new WebSocket("ws://127.0.0.1:8080/chat");
+
+    ws.onopen = () => {
+        log("[open] connected");
+    };
+
+    ws.onmessage = (e) => {
+        log("[recv] " + e.data);
+    };
+
+    ws.onerror = (e) => {
+        log("[error]");
+        console.error(e);
+    };
+
+    ws.onclose = (e) => {
+        log(`[close] code=${e.code} reason=${e.reason}`);
+    };
+}
+
+function send() {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+        log("not connected");
+        return;
+    }
+
+    const text = document.getElementById("msg").value;
+    ws.send(text);
+    log("[send] " + text);
+}
+
+function disconnect() {
+    if (ws) {
+        ws.close();
+    }
+}
+</script>
+
+</body>
+</html>

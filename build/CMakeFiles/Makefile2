@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /home/carphhh/C++server/tiny-web-server/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/webserver.dir/all
+all: CMakeFiles/web_server.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/webserver.dir/codegen
+codegen: CMakeFiles/web_server.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/webserver.dir/clean
+clean: CMakeFiles/web_server.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/webserver.dir
+# Target rules for target CMakeFiles/web_server.dir
 
 # All Build rule for target.
-CMakeFiles/webserver.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/carphhh/C++server/tiny-web-server/build/CMakeFiles --progress-num=1,2,3,4 "Built target webserver"
-.PHONY : CMakeFiles/webserver.dir/all
+CMakeFiles/web_server.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/carphhh/C++server/tiny-web-server/build/CMakeFiles --progress-num=1,2,3,4 "Built target web_server"
+.PHONY : CMakeFiles/web_server.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/webserver.dir/rule: cmake_check_build_system
+CMakeFiles/web_server.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/carphhh/C++server/tiny-web-server/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/webserver.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/web_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/carphhh/C++server/tiny-web-server/build/CMakeFiles 0
-.PHONY : CMakeFiles/webserver.dir/rule
+.PHONY : CMakeFiles/web_server.dir/rule
 
 # Convenience name for target.
-webserver: CMakeFiles/webserver.dir/rule
-.PHONY : webserver
+web_server: CMakeFiles/web_server.dir/rule
+.PHONY : web_server
 
 # codegen rule for target.
-CMakeFiles/webserver.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/carphhh/C++server/tiny-web-server/build/CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target webserver"
-.PHONY : CMakeFiles/webserver.dir/codegen
+CMakeFiles/web_server.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/carphhh/C++server/tiny-web-server/build/CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target web_server"
+.PHONY : CMakeFiles/web_server.dir/codegen
 
 # clean rule for target.
-CMakeFiles/webserver.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/clean
-.PHONY : CMakeFiles/webserver.dir/clean
+CMakeFiles/web_server.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/clean
+.PHONY : CMakeFiles/web_server.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

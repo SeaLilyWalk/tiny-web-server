@@ -5,9 +5,14 @@
 #include <fcntl.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <openssl/sha.h>
+#include <openssl/evp.h>
 
 #include <iostream>
 #include <cstring>
+#include <string>
+#include <cmath>
+#include <bitset>
 
 #define BUF_SIZE 8192
 #define HTTP 0
@@ -22,6 +27,8 @@ private:
 
     bool SendWeb(char *http_data);
     bool UpdateToWebsocket(char *http_data);
+
+    void wskey_to_wsaccept(char *ws_key);
 
 public:
     Connection(int fd);

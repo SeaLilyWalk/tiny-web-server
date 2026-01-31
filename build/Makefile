@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named webserver
+# Target rules for targets named web_server
 
 # Build rule for target.
-webserver: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 webserver
-.PHONY : webserver
+web_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 web_server
+.PHONY : web_server
 
 # fast build rule for target.
-webserver/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/build
-.PHONY : webserver/fast
+web_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/build
+.PHONY : web_server/fast
 
 src/connection.o: src/connection.cc.o
 .PHONY : src/connection.o
 
 # target to build an object file
 src/connection.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/connection.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/connection.cc.o
 .PHONY : src/connection.cc.o
 
 src/connection.i: src/connection.cc.i
@@ -142,7 +142,7 @@ src/connection.i: src/connection.cc.i
 
 # target to preprocess a source file
 src/connection.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/connection.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/connection.cc.i
 .PHONY : src/connection.cc.i
 
 src/connection.s: src/connection.cc.s
@@ -150,7 +150,7 @@ src/connection.s: src/connection.cc.s
 
 # target to generate assembly for a file
 src/connection.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/connection.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/connection.cc.s
 .PHONY : src/connection.cc.s
 
 src/main.o: src/main.cc.o
@@ -158,7 +158,7 @@ src/main.o: src/main.cc.o
 
 # target to build an object file
 src/main.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/main.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/main.cc.o
 .PHONY : src/main.cc.o
 
 src/main.i: src/main.cc.i
@@ -166,7 +166,7 @@ src/main.i: src/main.cc.i
 
 # target to preprocess a source file
 src/main.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/main.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/main.cc.i
 .PHONY : src/main.cc.i
 
 src/main.s: src/main.cc.s
@@ -174,7 +174,7 @@ src/main.s: src/main.cc.s
 
 # target to generate assembly for a file
 src/main.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/main.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/main.cc.s
 .PHONY : src/main.cc.s
 
 src/server.o: src/server.cc.o
@@ -182,7 +182,7 @@ src/server.o: src/server.cc.o
 
 # target to build an object file
 src/server.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/server.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/server.cc.o
 .PHONY : src/server.cc.o
 
 src/server.i: src/server.cc.i
@@ -190,7 +190,7 @@ src/server.i: src/server.cc.i
 
 # target to preprocess a source file
 src/server.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/server.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/server.cc.i
 .PHONY : src/server.cc.i
 
 src/server.s: src/server.cc.s
@@ -198,7 +198,7 @@ src/server.s: src/server.cc.s
 
 # target to generate assembly for a file
 src/server.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/server.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/web_server.dir/build.make CMakeFiles/web_server.dir/src/server.cc.s
 .PHONY : src/server.cc.s
 
 # Help Target
@@ -209,7 +209,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... webserver"
+	@echo "... web_server"
 	@echo "... src/connection.o"
 	@echo "... src/connection.i"
 	@echo "... src/connection.s"

@@ -35,8 +35,8 @@ bool Connection::HTTPHandler() {
             bool request_successful;
             if (std::strstr(http_data, "Sec-WebSocket-Key") == nullptr)
                 request_successful = SendWeb(http_data);
-            // else 
-            //     request_successful = UpdateToWebsocket(http_data);
+            else 
+                request_successful = UpdateToWebsocket(http_data);
             delete [] http_data;
             std::strncpy(buf_, buf_+http_len, BUF_SIZE-http_len);
             if (!request_successful)
@@ -52,28 +52,23 @@ bool Connection::HTTPHandler() {
 
 
 bool Connection::SendWeb(char *http_data) {
-    std::cout << http_data << std::endl;
     bool flag = false;
     if (std::strstr(http_data, "Accept: text/html") != nullptr)  {
-        std::cout << "Accept: text/html" << std::endl;
         flag = true;
     }
     char req_line[64] = {'\0'};
     std::strcpy(req_line, std::strtok(http_data, "\r\n"));
-    std::cout << req_line << std::endl;
     if (std::strcmp("GET", std::strtok(req_line, " ")) != 0)
         return false;
     char file_name[30] = "pages";
-    std::cout << file_name << std::endl;
     std::strncpy(file_name+5, std::strtok(NULL, " "), 25);
-    std::cout << file_name << std::endl;
     FILE *send_web = fopen(file_name, "r");
     char file_buf[128];
     if (send_web == nullptr) {          // 404 Not Found
         char head404[] =   "HTTP/1.0 404 Not Found\r\n"
-                        "Server:Linux Web Server\r\n"
-                        "Content-length:8192\r\n"
-                        "Content-type:html\r\n\r\n";
+                            "Server:Linux Web Server\r\n"
+                            "Content-length:8192\r\n"
+                            "Content-type:html\r\n\r\n";
         write(fd_, head404, 92);
         if (flag) {
             FILE *send_error = fopen("pages/notfound.html", "r");
@@ -86,20 +81,55 @@ bool Connection::SendWeb(char *http_data) {
         return false;
     }
     char head200[] =   "HTTP/1.0 200 OK\r\n"
-                    "Server:Linux Web Server\r\n"
-                    "Content-length:8192\r\n"
-                    "Content-type:html\r\n\r\n";
+                        "Server:Linux Web Server\r\n"
+                        "Content-length:8192\r\n"
+                        "Content-type:html\r\n\r\n";
     write(fd_, head200, 85);
-    std::cout << "write head" << std::endl;
     if (flag) {
         memset(file_buf, 0, 128);
         while (fgets(file_buf, 128, send_web) != NULL) {
-            write(fd_, file_buf, sizeof(file_buf));
-            std::cout << file_buf;
+            write(fd_, file_buf, std::strlen(file_buf));
+            // std::cout << file_buf;
             memset(file_buf, 0, 128);
         }
-        std::cout << std::endl;
      }
     fclose(send_web);
+    return true;
+}
+
+
+bool Connection::UpdateToWebsocket(char *http_data) {
+    char head101[140] = "HTTP/1.1 101 Switching Protocols\r\n"
+                        "Upgrade: websocket\r\n"
+                        "Connection: Upgrade\r\n"
+                        "Sec-WebSocket-Accept: ";
+    char *ws_key = std::strtok(http_data, "\r\n");
+    while (ws_key != nullptr) {
+        ws_key = std::strtok(NULL, "\r\n");
+        if (ws_key == nullptr)
+            return false;
+        if (std::strstr(ws_key, "Sec-WebSocket-Key") != nullptr)
+            break;
+    }
+    std::strcpy(ws_key, ws_key+19); 
+
+    // get Sec-WebSocket-Accept
+    const char *GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+    char buf[256];
+    unsigned char sha1_result[SHA_DIGEST_LENGTH];
+    snprintf(buf, sizeof(buf), "%s%s", ws_key, GUID);
+    SHA1((unsigned char *)buf, strlen(buf), sha1_result);
+    char *accept_key = new char[64]();
+    EVP_EncodeBlock(
+        (unsigned char *)accept_key,
+        sha1_result,
+        SHA_DIGEST_LENGTH
+    );
+
+    snprintf(head101+97, 42, "%s%s", accept_key, "\r\n\r\n");
+    write(fd_, head101, 126);
+
+    delete [] accept_key;
+    state_ = WEBSOCKET;
     return true;
 }

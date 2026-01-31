@@ -1,4 +1,4 @@
-CMakeFiles/webserver.dir/src/connection.cc.o: \
+CMakeFiles/web_server.dir/src/connection.cc.o: \
  /home/carphhh/C++server/tiny-web-server/src/connection.cc \
  /usr/include/stdc-predef.h \
  /home/carphhh/C++server/tiny-web-server/src/../include/connection.h \
