@@ -37,7 +37,7 @@ function connect() {
         return;
     }
 
-    ws = new WebSocket("ws://127.0.0.1:8081/chat");
+    ws = new WebSocket("ws://127.0.0.1:8080/chat");
 
     ws.onopen = () => {
         log("[open] connected");

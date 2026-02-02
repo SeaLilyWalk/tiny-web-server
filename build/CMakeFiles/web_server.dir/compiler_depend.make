@@ -9,12 +9,16 @@ CMakeFiles/web_server.dir/src/connection.cc.o: /home/carphhh/C++server/tiny-web-
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/ioctl.h \
+  /usr/include/asm-generic/ioctls.h \
   /usr/include/asm-generic/posix_types.h \
   /usr/include/asm-generic/socket.h \
   /usr/include/asm-generic/sockios.h \
   /usr/include/asm-generic/types.h \
   /usr/include/asm/bitsperlong.h \
   /usr/include/asm/errno.h \
+  /usr/include/asm/ioctl.h \
+  /usr/include/asm/ioctls.h \
   /usr/include/asm/posix_types.h \
   /usr/include/asm/posix_types_64.h \
   /usr/include/asm/socket.h \
@@ -27,6 +31,7 @@ CMakeFiles/web_server.dir/src/connection.cc.o: /home/carphhh/C++server/tiny-web-
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
   /usr/include/bits/environments.h \
+  /usr/include/bits/epoll.h \
   /usr/include/bits/errno.h \
   /usr/include/bits/fcntl-linux.h \
   /usr/include/bits/fcntl.h \
@@ -38,6 +43,8 @@ CMakeFiles/web_server.dir/src/connection.cc.o: /home/carphhh/C++server/tiny-web-
   /usr/include/bits/getopt_core.h \
   /usr/include/bits/getopt_posix.h \
   /usr/include/bits/in.h \
+  /usr/include/bits/ioctl-types.h \
+  /usr/include/bits/ioctls.h \
   /usr/include/bits/iscanonical.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/libm-simd-decl-stubs.h \
@@ -221,6 +228,7 @@ CMakeFiles/web_server.dir/src/connection.cc.o: /home/carphhh/C++server/tiny-web-
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/falloc.h \
+  /usr/include/linux/ioctl.h \
   /usr/include/linux/limits.h \
   /usr/include/linux/posix_types.h \
   /usr/include/linux/sched/types.h \
@@ -266,9 +274,12 @@ CMakeFiles/web_server.dir/src/connection.cc.o: /home/carphhh/C++server/tiny-web-
   /usr/include/string.h \
   /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
+  /usr/include/sys/epoll.h \
+  /usr/include/sys/ioctl.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
   /usr/include/sys/socket.h \
+  /usr/include/sys/ttydefaults.h \
   /usr/include/sys/types.h \
   /usr/include/time.h \
   /usr/include/unistd.h \
@@ -960,12 +971,6 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/c++/14.2.1/bits/unordered_set.h:
 
-/usr/include/sys/ttydefaults.h:
-
-/usr/include/sys/ioctl.h:
-
-/usr/include/sys/epoll.h:
-
 /usr/include/c++/14.2.1/unordered_map:
 
 /usr/include/c++/14.2.1/bits/unordered_map.h:
@@ -1002,22 +1007,6 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/bits/sigaction.h:
 
-/usr/include/bits/ioctls.h:
-
-/usr/include/bits/ioctl-types.h:
-
-/usr/include/bits/epoll.h:
-
-/usr/include/asm/ioctls.h:
-
-/usr/include/asm/ioctl.h:
-
-/usr/include/asm-generic/ioctls.h:
-
-/usr/include/asm-generic/ioctl.h:
-
-/home/carphhh/C++server/tiny-web-server/include/server.h:
-
 /home/carphhh/C++server/tiny-web-server/src/main.cc:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h:
@@ -1030,7 +1019,13 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/time.h:
 
+/usr/include/sys/ttydefaults.h:
+
 /usr/include/sys/select.h:
+
+/usr/include/sys/ioctl.h:
+
+/usr/include/sys/epoll.h:
 
 /usr/include/sys/cdefs.h:
 
@@ -1044,13 +1039,17 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/stdc-predef.h:
 
-/usr/include/bits/floatn.h:
+/usr/include/openssl/types.h:
 
-/usr/include/c++/14.2.1/bits/concept_check.h:
+/usr/include/openssl/symhacks.h:
 
-/usr/include/bits/stat.h:
+/usr/include/openssl/stack.h:
 
-/usr/include/c++/14.2.1/bits/char_traits.h:
+/usr/include/openssl/sha.h:
+
+/usr/include/openssl/safestack.h:
+
+/usr/include/openssl/opensslv.h:
 
 /usr/include/bits/signum-arch.h:
 
@@ -1065,10 +1064,6 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 /usr/include/bits/wctype-wchar.h:
 
 /usr/include/bits/timesize.h:
-
-/usr/include/bits/types/wint_t.h:
-
-/usr/include/c++/14.2.1/bits/basic_ios.h:
 
 /usr/include/c++/14.2.1/bits/locale_facets.h:
 
@@ -1104,6 +1099,8 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/bits/mathcalls.h:
 
+/usr/include/bits/ioctls.h:
+
 /usr/include/bits/types/__fpos64_t.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h:
@@ -1120,8 +1117,6 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/bits/stdlib-float.h:
 
-/usr/include/bits/thread-shared-types.h:
-
 /usr/include/bits/struct_stat.h:
 
 /usr/include/bits/types/time_t.h:
@@ -1136,11 +1131,13 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/c++/14.2.1/bits/predefined_ops.h:
 
+/usr/include/c++/14.2.1/bits/basic_ios.h:
+
+/usr/include/bits/types/wint_t.h:
+
 /usr/include/bits/types/error_t.h:
 
 /usr/include/c++/14.2.1/new:
-
-/usr/include/openssl/stack.h:
 
 /usr/include/sys/types.h:
 
@@ -1148,11 +1145,143 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/linux/close_range.h:
 
-/usr/include/bits/fcntl.h:
+/usr/include/bits/siginfo-consts.h:
 
-/usr/include/asm-generic/socket.h:
+/usr/include/bits/sockaddr.h:
 
-/usr/include/c++/14.2.1/bits/exception_ptr.h:
+/usr/include/c++/14.2.1/bits/alloc_traits.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/bits/socket.h:
+
+/home/carphhh/C++server/tiny-web-server/include/server.h:
+
+/usr/include/asm-generic/ioctl.h:
+
+/usr/lib/libc.so:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/c++/14.2.1/bits/basic_string.h:
+
+/usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/features.h:
+
+/usr/include/asm/ioctls.h:
+
+/usr/include/openssl/bio.h:
+
+/usr/include/asm-generic/ioctls.h:
+
+/usr/include/bits/libm-simd-decl-stubs.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/bits/endianness.h:
+
+/usr/include/c++/14.2.1/typeinfo:
+
+/usr/include/c++/14.2.1/bits/stl_function.h:
+
+/usr/include/bits/byteswap.h:
+
+/home/carphhh/C++server/tiny-web-server/src/server.cc:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
+
+/usr/include/asm/ioctl.h:
+
+CMakeFiles/web_server.dir/src/connection.cc.o:
+
+/usr/include/asm-generic/int-ll64.h:
+
+/usr/include/bits/mathcalls-macros.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/asm-generic/types.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/c++/14.2.1/bits/char_traits.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/bits/cpu-set.h:
+
+/usr/include/bits/math-vector.h:
+
+/usr/include/bits/uio_lim.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
+
+/usr/include/wctype.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/fp-fast.h:
+
+/usr/include/bits/epoll.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/14.2.1/bits/enable_special_members.h:
+
+/usr/include/bits/types/struct_osockaddr.h:
+
+/usr/include/c++/14.2.1/bits/locale_facets.tcc:
+
+/usr/lib/ld-linux-x86-64.so.2:
+
+/usr/include/c++/14.2.1/cmath:
+
+/usr/include/bits/endian.h:
+
+/usr/include/c++/14.2.1/initializer_list:
+
+/usr/include/c++/14.2.1/ext/type_traits.h:
+
+/usr/include/alloca.h:
+
+/usr/include/openssl/core_dispatch.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/asm/socket.h:
+
+/usr/include/c++/14.2.1/cstring:
+
+/usr/include/arpa/inet.h:
+
+/usr/include/c++/14.2.1/bits/postypes.h:
+
+/usr/include/c++/14.2.1/bits/allocator.h:
+
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/c++/14.2.1/backward/binders.h:
+
+/usr/include/asm-generic/errno.h:
 
 /usr/include/bits/stdint-intn.h:
 
@@ -1170,17 +1299,21 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/bits/locale.h:
 
-/usr/include/bits/libm-simd-decl-stubs.h:
+/usr/include/bits/stdlib-bsearch.h:
 
-/usr/include/openssl/sha.h:
+/usr/include/c++/14.2.1/bits/basic_ios.tcc:
 
-/usr/include/bits/confname.h:
+/usr/include/bits/stat.h:
 
-/usr/include/bits/endianness.h:
+/usr/include/c++/14.2.1/bits/concept_check.h:
 
-/usr/include/c++/14.2.1/typeinfo:
+/usr/include/asm/posix_types_64.h:
 
-/usr/include/c++/14.2.1/bits/stl_function.h:
+/usr/include/asm-generic/socket.h:
+
+/usr/include/c++/14.2.1/bits/exception_ptr.h:
+
+/usr/include/bits/fcntl.h:
 
 /usr/include/bits/stdio.h:
 
@@ -1194,117 +1327,21 @@ CMakeFiles/web_server.dir/src/main.cc.o:
 
 /usr/include/bits/in.h:
 
-/usr/include/bits/byteswap.h:
-
-/home/carphhh/C++server/tiny-web-server/src/server.cc:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
-
-/usr/include/bits/typesizes.h:
-
-/usr/include/bits/cpu-set.h:
-
-/usr/include/c++/14.2.1/bits/cpp_type_traits.h:
-
-/usr/include/bits/siginfo-consts.h:
-
-/usr/include/bits/sockaddr.h:
-
-/usr/include/wctype.h:
-
-/usr/include/sched.h:
-
-/usr/include/bits/fp-fast.h:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/c++/14.2.1/bits/enable_special_members.h:
-
-/usr/include/bits/types/struct_osockaddr.h:
-
-/usr/include/c++/14.2.1/bits/locale_facets.tcc:
-
-/usr/lib/ld-linux-x86-64.so.2:
-
-/usr/include/c++/14.2.1/cmath:
-
-/usr/include/bits/endian.h:
-
-/usr/include/c++/14.2.1/bits/exception.h:
-
-/usr/include/openssl/indicator.h:
-
-/usr/include/c++/14.2.1/initializer_list:
-
-/usr/include/c++/14.2.1/ext/type_traits.h:
-
-/usr/include/alloca.h:
-
-/usr/include/openssl/core_dispatch.h:
-
-/usr/include/c++/14.2.1/bits/allocator.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/openssl/opensslv.h:
-
-/usr/include/bits/mathcalls-macros.h:
-
-CMakeFiles/web_server.dir/src/connection.cc.o:
-
-/usr/include/asm-generic/int-ll64.h:
-
-/usr/include/bits/posix2_lim.h:
-
-/usr/include/c++/14.2.1/backward/binders.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-/usr/include/asm-generic/bitsperlong.h:
-
-/usr/include/asm-generic/types.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/linux/ioctl.h:
-
-/usr/include/bits/fp-logb.h:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/usr/include/c++/14.2.1/bits/basic_ios.tcc:
-
-/usr/include/asm/posix_types_64.h:
-
-/usr/include/bits/math-vector.h:
-
-/usr/include/bits/uio_lim.h:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/arpa/inet.h:
-
-/usr/include/c++/14.2.1/bits/postypes.h:
-
-/usr/include/c++/14.2.1/bits/cxxabi_forced.h:
-
-/usr/include/asm/bitsperlong.h:
-
 /usr/include/bits/floatn-common.h:
 
 CMakeFiles/web_server.dir/src/server.cc.o:
 
 /home/carphhh/C++server/tiny-web-server/src/connection.cc:
 
-/usr/include/c++/14.2.1/bits/basic_string.h:
+/usr/include/bits/floatn.h:
 
-/usr/lib/libc.so:
+/usr/include/bits/thread-shared-types.h:
 
-/usr/include/bits/pthreadtypes.h:
+/usr/include/bits/ioctl-types.h:
 
-/usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h:
+/usr/lib/libstdc++.so:
+
+/usr/include/locale.h:
 
 /usr/include/string.h:
 
@@ -1312,9 +1349,9 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/c++/14.2.1/cwchar:
 
-/usr/include/bits/environments.h:
-
 /usr/include/bits/types/struct_FILE.h:
+
+/usr/include/bits/environments.h:
 
 /home/carphhh/C++server/tiny-web-server/include/connection.h:
 
@@ -1346,47 +1383,29 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/bits/types/timer_t.h:
 
+/usr/include/gnu/stubs.h:
+
+/usr/include/c++/14.2.1/bits/localefwd.h:
+
 /usr/include/asm/sockios.h:
 
 /usr/include/openssl/evperr.h:
 
 /usr/include/bits/mathcalls-narrow.h:
 
-/usr/include/bits/pthreadtypes-arch.h:
-
-/usr/include/fcntl.h:
-
-/usr/include/c++/14.2.1/bits/localefwd.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/bits/socket.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/c++/14.2.1/bits/alloc_traits.h:
-
-/usr/include/bits/select.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/asm/socket.h:
-
-/usr/include/c++/14.2.1/cstring:
+/usr/include/bits/setjmp.h:
 
 /usr/include/c++/14.2.1/bits/charconv.h:
 
-/usr/include/bits/setjmp.h:
+/usr/include/c++/14.2.1/bits/cpp_type_traits.h:
+
+/usr/include/asm/bitsperlong.h:
+
+/usr/include/c++/14.2.1/bits/cxxabi_forced.h:
+
+/usr/include/openssl/indicator.h:
+
+/usr/include/c++/14.2.1/bits/exception.h:
 
 /usr/include/c++/14.2.1/bits/exception_defines.h:
 
@@ -1424,6 +1443,10 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/c++/14.2.1/bits/move.h:
 
+/usr/include/pthread.h:
+
+/usr/include/c++/14.2.1/string:
+
 /usr/include/linux/errno.h:
 
 /usr/include/openssl/params.h:
@@ -1437,6 +1460,12 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 /usr/include/c++/14.2.1/bits/ostream_insert.h:
 
 /usr/include/c++/14.2.1/bits/ptr_traits.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h:
+
+/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
+
+/usr/include/c++/14.2.1/system_error:
 
 /usr/include/c++/14.2.1/bits/refwrap.h:
 
@@ -1472,8 +1501,6 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/c++/14.2.1/cctype:
 
-/usr/include/openssl/types.h:
-
 /usr/include/c++/14.2.1/cerrno:
 
 /usr/include/bits/sigstksz.h:
@@ -1500,10 +1527,6 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/c++/14.2.1/debug/assertions.h:
 
-/usr/include/c++/14.2.1/string:
-
-/usr/include/pthread.h:
-
 /usr/include/c++/14.2.1/debug/debug.h:
 
 /usr/include/c++/14.2.1/streambuf:
@@ -1524,9 +1547,9 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/c++/14.2.1/iosfwd:
 
-/usr/include/asm/errno.h:
-
 /usr/include/bits/stdint-uintn.h:
+
+/usr/include/asm/errno.h:
 
 /usr/include/c++/14.2.1/iostream:
 
@@ -1540,9 +1563,9 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/features-time64.h:
 
-/usr/include/c++/14.2.1/bits/stl_construct.h:
-
 /usr/include/c++/14.2.1/ext/atomicity.h:
+
+/usr/include/c++/14.2.1/bits/stl_construct.h:
 
 /usr/include/c++/14.2.1/bits/utility.h:
 
@@ -1551,12 +1574,6 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 /usr/lib/Scrt1.o:
 
 /usr/include/c++/14.2.1/type_traits:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/error_constants.h:
-
-/usr/include/c++/14.2.1/system_error:
-
-/usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/14.2.1/bits/std_abs.h:
 
@@ -1586,21 +1603,19 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 
 /usr/include/limits.h:
 
+/usr/include/bits/fp-logb.h:
+
+/usr/include/linux/ioctl.h:
+
 /usr/include/linux/limits.h:
 
 /usr/include/linux/sched/types.h:
 
 /usr/include/linux/stddef.h:
 
-/usr/lib/libstdc++.so:
-
-/usr/include/locale.h:
-
 /usr/include/netinet/in.h:
 
 /usr/include/openssl/asn1err.h:
-
-/usr/include/openssl/bio.h:
 
 /usr/lib/libcrypto.so:
 
@@ -1621,7 +1636,3 @@ CMakeFiles/web_server.dir/src/server.cc.o:
 /usr/include/linux/types.h:
 
 /usr/include/openssl/opensslconf.h:
-
-/usr/include/openssl/safestack.h:
-
-/usr/include/openssl/symhacks.h:

@@ -72,9 +72,17 @@ void Server::Run() {
                 event.data.fd = clnt_sock;
                 epoll_ctl(epfd_, EPOLL_CTL_ADD, clnt_sock, &event);
                 std::cout << "Connect client: ";
-                std::cout << ntohl(clnt_addr.sin_addr.s_addr) << std::endl;
-                connections_[clnt_sock] = new Connection(clnt_sock);
+                std::cout << ntohl(clnt_addr.sin_addr.s_addr) << ' ' << ntohs(clnt_addr.sin_port) << std::endl;
+                connections_[clnt_sock] = new Connection(clnt_sock, epfd_);
                 // 因为在建立链接之后浏览器才会发送报文, 所以先不用调用HTTPeHandler
+            } else if (ep_events_[i].events&EPOLLOUT) {
+                curr_connection = connections_[curr_fd];
+                if (!curr_connection->SendData()) {
+                    epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
+                    delete curr_connection;
+                    close(curr_fd);
+                    std::cout << "Close client: " << curr_fd << std::endl;
+                }
             } else {
                 curr_connection = connections_[curr_fd];
                 if (curr_connection->get_state() == HTTP) {
@@ -87,9 +95,14 @@ void Server::Run() {
                         if (curr_connection->get_state() == WEBSOCKET)
                             std::cout << "Update to websocket" << std::endl;
                     }
+                } else {
+                    if (!curr_connection->WebsocketHandler()) {
+                        epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
+                        delete curr_connection;
+                        close(curr_fd);
+                        std::cout << "Close client: " << curr_fd << std::endl;
+                    }
                 }
-                // else
-                //    curr_connection->WebsocketHandler();
             }
         } // for (int i = 0; i < event_cnt; ++i)
     }

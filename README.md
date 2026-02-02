@@ -1,7 +1,6 @@
 # README
 
 该项目是一个小型的高并发web服务器，能够应用HTTP/Websockets实现一个即时的网络聊天室
-计算WebSocketAccept值时使用了来自 https://github.com/vog/sha1 的sha1cpp
 
 
 
@@ -16,8 +15,9 @@
 1. main.cc
 
 2. server.h
-   用于处理与客户端的连接
+   用于处理与客户端的连接，管理epoll事件和各种链接
 
 3. connection.h
+   保存链接的信息，并进行消息的收发操作
 
 4. hhh
