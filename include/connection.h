@@ -10,6 +10,7 @@
 #include <openssl/evp.h>
 
 #include <iostream>
+#include <cstdio>
 #include <cstring>
 #include <string>
 #include <cmath>
@@ -32,6 +33,7 @@ private:
 
     bool WebResponse(char *http_data);
     bool UpdateToWebsocket(char *http_data);
+    void BuildWsFrame(unsigned char* &ws_frame, unsigned char *payload, size_t payload_len);
 
 public:
     Connection(int fd, int epfd);
@@ -40,8 +42,9 @@ public:
         return state_;
     }
     bool HTTPHandler();         // HTTP帧通过特殊字符定界
-    bool WebsocketHandler();    // Websocket帧通过长度定界
+    bool WebsocketHandler(unsigned char* &ws_frame);    // Websocket帧通过长度定界
     bool SendData();
+    bool SendData(char *message);
 };
 
 #endif

@@ -1,1 +1,0 @@
-g++  -O3 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/webserver.dir/link.d CMakeFiles/webserver.dir/src/connection.cc.o CMakeFiles/webserver.dir/src/server.cc.o CMakeFiles/webserver.dir/src/main.cc.o -o webserver  -lOpenSSL::SSL -lOpenSSL::Crypto

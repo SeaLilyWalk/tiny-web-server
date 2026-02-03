@@ -81,6 +81,7 @@ void Server::Run() {
                     epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
                     delete curr_connection;
                     close(curr_fd);
+                    connections_.erase(curr_fd);
                     std::cout << "Close client: " << curr_fd << std::endl;
                 }
             } else {
@@ -90,22 +91,40 @@ void Server::Run() {
                         epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
                         delete curr_connection;
                         close(curr_fd);
+                        connections_.erase(curr_fd);
                         std::cout << "Close client: " << curr_fd << std::endl;
                     } else {
                         if (curr_connection->get_state() == WEBSOCKET)
                             std::cout << "Update to websocket" << std::endl;
                     }
                 } else {
-                    if (!curr_connection->WebsocketHandler()) {
+                    unsigned char *ws_frame = nullptr;
+                    if (!curr_connection->WebsocketHandler(ws_frame)) {
                         epoll_ctl(epfd_, EPOLL_CTL_DEL, curr_fd, NULL);
                         delete curr_connection;
                         close(curr_fd);
+                        connections_.erase(curr_fd);
                         std::cout << "Close client: " << curr_fd << std::endl;
+                    } else if (ws_frame != nullptr){
+                        for (auto &c : connections_) 
+                            if (
+                                c.first != serv_sock_ && 
+                                // c.first != curr_fd &&
+                                !c.second->SendData((char*)ws_frame)
+                            ) {
+                                epoll_ctl(epfd_, EPOLL_CTL_DEL, c.first, NULL);
+                                delete c.second;
+                                close(c.first);
+                                connections_.erase(c.first);
+                                std::cout << "Close client: " << c.first << std::endl;
+                            }
                     }
-                }
-            }
+                    if (ws_frame != nullptr)
+                        delete [] ws_frame;
+                } // if (curr_connection->get_state() == HTTP) ... else ...
+            } // different EPOLL events
         } // for (int i = 0; i < event_cnt; ++i)
-    }
+    } // while (1)
 }
 
 

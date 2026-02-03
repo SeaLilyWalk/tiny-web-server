@@ -141,18 +141,39 @@ bool Connection::UpdateToWebsocket(char *http_data) {
     );
 
     snprintf(head101+97, 42, "%s%s", accept_key, "\r\n\r\n");
-    std::strncpy(send_buf_+send_len_, head101, BUF_SIZE+4-send_len_);
-    send_len_ += std::strlen(head101);
+    if (!SendData(head101))
+        return false;
 
     delete [] accept_key;
     state_ = WEBSOCKET;
-    if (!SendData())
-        return false;
     return true;
 }
 
 
-bool Connection::WebsocketHandler() {
+void Connection::BuildWsFrame(
+        unsigned char* &ws_frame, unsigned char *payload, 
+        size_t payload_len
+    ) {
+    ws_frame = new unsigned char[payload_len+16]();
+    int pos = 0;
+    ws_frame[pos++] = 0x81;
+    if (payload_len < 126) {
+        ws_frame[pos++] = payload_len;
+    } else if (payload_len <= 0xFFFF) {
+        ws_frame[pos++] = 126;
+        ws_frame[pos++] = (payload_len >> 8) & 0xFF;
+        ws_frame[pos++] = payload_len & 0xFF;
+    } else {
+        ws_frame[pos++] = 127;
+        for (int i = 7; i >= 0; i--) {
+            ws_frame[pos++] = (payload_len >> (i * 8)) & 0xFF;
+        }
+    }
+    memcpy(ws_frame+pos, payload, payload_len);
+}
+
+
+bool Connection::WebsocketHandler(unsigned char* &ws_frame) {
     int part_len;
     int fin, opcode, masked, payload_len;
     bool finded_head = false;
@@ -185,15 +206,15 @@ bool Connection::WebsocketHandler() {
             return false;
         } else if (finded_head && recv_len_ >= payload_len+6) { // received the whole bag
             unsigned char *mask = p+2, *payload = p+6;
+            char *request_payload = new char[payload_len+16]();
+            sprintf(request_payload, "[%d]: ", fd_);
+            int bpos = std::strlen(request_payload);
             for (int i = 0; i < payload_len; ++i)
-                payload[i] ^= mask[i%4];
-            char *msg = new char[payload_len+2]();
-            std::strncpy(msg, (char*)payload, payload_len);
-            msg[payload_len] = '\0';
-            std::cout << "Websocket message: " << msg << std::endl;
+                request_payload[i+bpos] = payload[i] ^ mask[i%4];
+            BuildWsFrame(ws_frame, (unsigned char*)request_payload, payload_len+bpos);
+            delete [] request_payload;
             std::strcpy(recv_buf_, recv_buf_+payload_len+6);
             recv_len_ -= payload_len+6;
-            // recv_buf_[recv_len_] = '\0';
             break;
         }
     }
@@ -206,6 +227,7 @@ bool Connection::SendData() {
         std::cerr << "send error" << std::endl;
         return false;
     }
+    std::cout << send_buf_ << std::endl;
 
     int n, send_pos = 0;
     while (send_pos < send_len_) {
@@ -242,4 +264,11 @@ bool Connection::SendData() {
         epoll_ctl(epfd_, EPOLL_CTL_MOD, fd_, &ev);
     }
     return true;
+}
+
+
+bool Connection::SendData(char *message) {
+    std::strncpy(send_buf_+send_len_, message, BUF_SIZE+4-send_len_);
+    send_len_ += std::strlen(message);
+    return SendData();
 }

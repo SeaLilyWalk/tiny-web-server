@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/web_server.dir/link.d CMakeFiles/web_server.dir/src/connection.cc.o CMakeFiles/web_server.dir/src/server.cc.o CMakeFiles/web_server.dir/src/main.cc.o -o web_server  /usr/lib/libssl.so /usr/lib/libcrypto.so -lpthread
