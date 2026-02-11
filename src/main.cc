@@ -7,16 +7,9 @@
 #include <csignal>
 #include <cstring>
 #include <string>
+#include <memory>
 
-#include "../include/server.h"
-
-Server *serv;
-
-void signalHandler(int signum) {
-    std::cout << "Recieved signal " << signum << std::endl;
-    delete serv;
-    exit(signum);
-}
+#include "../include/server/server.h"
 
 int main(int argc, char **argv) {
     if (argc != 2) {
@@ -24,9 +17,8 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    serv = new Server(atoi(argv[1]));
-    // std::signal(SIGINT, signalHandler);
-    serv->Run();
+    std::shared_ptr<Server> serv = std::make_shared<Server>(atoi(argv[1]));
+    serv->run();
 
     return 0;
 }

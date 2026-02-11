@@ -6,15 +6,15 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
-#include <openssl/sha.h>
-#include <openssl/evp.h>
 
 #include <iostream>
 #include <cstdio>
+#include <vector>
 #include <cstring>
 #include <string>
-#include <cmath>
-#include <bitset>
+#include <memory>
+
+#include "../protocol/http.h"
 
 #define BUF_SIZE 8192
 #define HTTP 0
@@ -25,23 +25,21 @@ private:
     int fd_;
     uint32_t events_; // 记录当前fd_对应epoll监听事件的状态
     int epfd_;
-    int recv_len_;
-    int send_len_;
-    char *recv_buf_;
-    char *send_buf_;
+    int recved_len_;
+    int sended_len_;
+    std::vector<uint8_t> recv_buf_;
+    std::vector<uint8_t> send_buf_;
     bool state_;
-
-    bool WebResponse(char *http_data);
-    bool UpdateToWebsocket(char *http_data);
-    void BuildWsFrame(unsigned char* &ws_frame, unsigned char *payload, size_t payload_len);
 
 public:
     Connection(int fd, int epfd);
-    ~Connection();
     inline bool get_state() {
         return state_;
     }
-    bool HTTPHandler();         // HTTP帧通过特殊字符定界
+    inline int get_fd() {
+        return fd_;
+    }
+    bool HTTPHandler(std::shared_ptr<Http::Frame> frame);         // HTTP帧通过特殊字符定界
     bool WebsocketHandler(unsigned char* &ws_frame);    // Websocket帧通过长度定界
     bool SendData();
     bool SendData(char *message);
