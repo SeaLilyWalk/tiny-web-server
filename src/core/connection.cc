@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../protocol/http.cc"
+#include "../protocol/websocket.cc"
 
 
 Connection::Connection(int fd, int epfd): 
@@ -28,6 +29,11 @@ bool Connection::HTTPHandler(std::shared_ptr<Http::Frame> frame) {
             std::cout << "read error" << std::endl;
             return false;
         }
+        recved_len_ += part_len;
+        if (recved_len_ >= BUF_SIZE) {
+            std::cout << "buf overflow" << std::endl;
+            return false;
+        }
         http_len = Http::parseFrame(frame, buf_p);
         if (http_len != 0) {
             if (!frame->valid)
@@ -35,14 +41,40 @@ bool Connection::HTTPHandler(std::shared_ptr<Http::Frame> frame) {
             if (frame->request_type == UPDATE_TO_WS)
                 state_ = WEBSOCKET;
             std::strcpy(buf_p, buf_p+http_len);
-            recved_len_ += part_len-http_len;
+            recved_len_ -= http_len;
             break;
-        } else {
-            recved_len_ += part_len;
-            if (recved_len_ >= BUF_SIZE) {
-                std::cout << "buf overflow" << std::endl;
+        }
+    }
+    return true;
+}
+
+
+bool Connection::WebsocketHandler(
+    std::shared_ptr<Websocket::Frame> frame
+) {
+    int part_len, ws_len;
+    char *buf_p = (char*)recv_buf_.data();
+    while (1) {
+        part_len = read(fd_, buf_p+recved_len_, BUF_SIZE-recved_len_);
+        if (part_len == 0)
+            break;
+        if (part_len < 0) {
+            std::cout << "read error" << std::endl;
+            return false;
+        }
+        recved_len_ += part_len;
+        if (recved_len_ >= BUF_SIZE) {
+            std::cout << "buf overflow" << std::endl;
+            return false;
+        }
+        int ws_len = Websocket::parseFrame(frame, buf_p, recved_len_);
+        if (ws_len != 0) {
+            if (!frame->valid)
                 return false;
-            }
+            // std::cout << frame->data << std::endl;
+            std::strcpy(buf_p, buf_p+ws_len);
+            recved_len_ -= ws_len;
+            break;
         }
     }
     return true;

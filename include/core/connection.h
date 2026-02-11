@@ -15,6 +15,7 @@
 #include <memory>
 
 #include "../protocol/http.h"
+#include "../protocol/websocket.h"
 
 #define BUF_SIZE 8192
 #define HTTP 0
@@ -39,8 +40,8 @@ public:
     inline int get_fd() {
         return fd_;
     }
-    bool HTTPHandler(std::shared_ptr<Http::Frame> frame);         // HTTP帧通过特殊字符定界
-    bool WebsocketHandler(unsigned char* &ws_frame);    // Websocket帧通过长度定界
+    bool HTTPHandler(std::shared_ptr<Http::Frame> frame);
+    bool WebsocketHandler(std::shared_ptr<Websocket::Frame> frame);
     bool SendData();
     bool SendData(char *message);
 };

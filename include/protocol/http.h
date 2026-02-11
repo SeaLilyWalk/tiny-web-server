@@ -1,15 +1,12 @@
 #ifndef HTTP_H
 #define HTTP_H
 
-#include <unistd.h>
-#include <fcntl.h>
 #include <arpa/inet.h>
 
 #include <iostream>
 #include <cstdio>
 #include <vector>
 #include <string>
-#include <unordered_map>
 #include <memory>
 
 #define NO_DATA 0

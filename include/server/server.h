@@ -31,6 +31,7 @@ private:
         std::shared_ptr<Http::Frame> frame, 
         std::shared_ptr<Connection> conn
     );
+    void broadcastWs(std::shared_ptr<Websocket::Frame> frame, int usr_id);
 
     void error_handler(std::string msg);
 

@@ -82,6 +82,13 @@ void Server::doRequest(epoll_event& event) {
                 removeConnection(curr_fd);
             else
                 onHttpRequest(http_frame, curr_conn);
+        } else {
+            std::shared_ptr<Websocket::Frame> ws_frame
+                = std::make_shared<Websocket::Frame>();
+            if (!curr_conn->WebsocketHandler(ws_frame))
+                removeConnection(curr_fd);
+            else if (ws_frame->length != 0)
+                broadcastWs(ws_frame, curr_fd);
         }
     }
     if (event.events&EPOLLOUT) {
@@ -157,6 +164,27 @@ void Server::onHttpRequest(
     conn->SendData((char*)http_frame.data());
     if (frame->request_type==SEND_PAGE || frame->request_type==NO_DATA)
         removeConnection(conn->get_fd());
+}
+
+
+void Server::broadcastWs(
+    std::shared_ptr<Websocket::Frame> frame, int usr_id
+) {
+    std::vector<uint8_t> frame_data(BUF_SIZE);
+    std::vector<uint8_t> ws_frame(BUF_SIZE);
+    sprintf(
+        (char*)frame_data.data(), "[%d]: %s", 
+        usr_id, frame->data.data()
+    );
+    int payload_len = std::strlen((char*)frame_data.data());
+    Websocket::buildFrame(frame_data, ws_frame, payload_len);
+    for (auto &usr : connections_)
+        if (
+            usr.first != serv_sock_ && 
+            usr.second->get_state() == WEBSOCKET
+        ) {
+            usr.second->SendData((char*)ws_frame.data());
+        }
 }
 
 
